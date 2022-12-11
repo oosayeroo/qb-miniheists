@@ -6,6 +6,8 @@ Config.DebugPoly = true
 Config.AddEndJobCommand = true --adds slash commands to end a job if someone gets bugged out
 
 Config.MinimumPolice = 0 --change this to whatever you like
+Config.PoliceAlertLab = true
+Config.PoliceAlertMW = true
 Config.MoneyType = 'cash'  -- cash/bank/blackmoney   -- whatever your server uses
 Config.EmailTime = 30 --how many seconds after accepting job before you ge the email for it
 
@@ -129,6 +131,9 @@ Config.ScrapItems = { --change to whatever you like to recieve when scrapping
 }
 Config.NumberOfScrapItems = 4 -- amount of different items to recieve 
 Config.ScrapItemAmount = 2 --amount of each item you recieve
+Config.GiveScrapMoney = true
+Config.ScrapMoneyLow = 20
+Config.ScrapMoneyMax = 40
 
 --//VEHICLES//--   --add as many car models as you want to each 3 Tiers
 Config.VehicleTierA = { 
