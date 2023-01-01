@@ -109,6 +109,7 @@ RegisterNetEvent("qb-miniheists:getRewardC", function()
 end)
 
 RegisterNetEvent("qb-miniheists:GetScrapReward", function()
+    local Player = QBCore.Functions.GetPlayer(source)
     local amount = Config.ScrapItemAmount
     local item = Config.ScrapItems[math.random(1, #Config.ScrapItems)]
     Player.Functions.AddItem(item, amount)
