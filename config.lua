@@ -1,7 +1,7 @@
 Config = {}
 
 --===change all prices/payments to your servers economy===--
-
+Config.DebugHeists = false -- true for testing
 Config.DebugPoly = true
 Config.AddEndJobCommand = true --adds slash commands to end a job if someone gets bugged out
 
@@ -131,7 +131,7 @@ Config.ScrapItems = { --change to whatever you like to recieve when scrapping
 }
 Config.NumberOfScrapItems = 4 -- amount of different items to recieve 
 Config.ScrapItemAmount = 2 --amount of each item you recieve
-Config.GiveScrapMoney = true
+Config.GiveScrapMoney = true -- if false will only give items when scrapping 
 Config.ScrapMoneyLow = 20
 Config.ScrapMoneyMax = 40
 
