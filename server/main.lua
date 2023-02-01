@@ -1,5 +1,37 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local MoneyType = Config.MoneyType
+local labnpcsspawned = false
+local mwnpcsspawned = false
+
+RegisterServerEvent("qb-miniheists:gatherlabnpc")
+AddEventHandler("qb-miniheists:gatherlabnpc", function()
+    if labnpcsspawned == false then
+		local _source = source
+		TriggerClientEvent("qb-miniheists:SpawnLabGuards", _source)
+		labnpcsspawned = true
+	end
+end)
+
+RegisterServerEvent("qb-miniheists:gathermwnpc")
+AddEventHandler("qb-miniheists:gathermwnpc", function() 
+    if mwnpcsspawned == false then
+		local _source = source
+		TriggerClientEvent("qb-miniheists:SpawnMWGuards", _source)
+		mwnpcsspawned = true
+	end
+end)
+
+RegisterNetEvent('qb-miniheists:ResetGuardsMW', function()
+    if mwnpcsspawned == true then
+        mwnpcsspawned = false
+    end
+end)
+
+RegisterNetEvent('qb-miniheists:ResetGuardsLab', function()
+    if labnpcsspawned == true then
+        labnpcsspawned = false
+    end
+end)
 
 RegisterNetEvent('qb-miniheists:LabHackDone', function()
     local src = source
