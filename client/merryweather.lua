@@ -113,6 +113,9 @@ RegisterNetEvent('qb-miniheists:MWHack1', function()
             else
                 TriggerEvent('animations:client:EmoteCommandStart', {"c"})
                 QBCore.Functions.Notify('You failed Hacking, try again', 'error', 5000)
+                if Config.PoliceAlertMW then
+                    TriggerServerEvent('police:server:policeAlert', 'Hack Detected at Merryweather Warehouse!')
+                end
                 TriggerServerEvent('qb-miniheists:gathermwnpc')
             end
         end, Config.MWHackType, Config.MWHackTime, 0)

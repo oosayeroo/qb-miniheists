@@ -81,7 +81,6 @@ end)
 
 RegisterNetEvent('qb-miniheists:StartLabHack', function()
     if QBCore.Functions.HasItem(Config.HackItem) then
-        TriggerServerEvent('police:server:policeAlert', 'Break in at Humane Labs, Laboratory 1!')
         TriggerEvent('animations:client:EmoteCommandStart', {"type"})
         QBCore.Functions.Progressbar('cnct_elect', 'Bypassing Firewall...', HackingTime, false, true, {
             disableMovement = true,
@@ -106,6 +105,9 @@ RegisterNetEvent('qb-miniheists:StartLabHack', function()
                 end)
                 Wait(HackingTime)
                 TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+                if Config.PoliceAlertLab then
+                    TriggerServerEvent('police:server:policeAlert', 'Break in at Humane Labs, Laboratory 1!')
+                end
                 TriggerServerEvent('qb-miniheists:LabHackDone')
                 if SecurityBypass == false then
                     TriggerServerEvent('qb-miniheists:gatherlabnpc')
