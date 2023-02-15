@@ -1,6 +1,12 @@
 Config = {}
 
---===change all prices/payments to your servers economy===--
+--===PHONE SETTINGS===--
+Config.PhoneScript = 'qb'
+-- qb = qb-phone
+-- qs = quasar smartphone
+-- road = roadphone
+-- gks = gks phone
+
 Config.DebugHeists = false -- true for testing
 Config.DebugPoly = true
 Config.AddEndJobCommand = true --adds slash commands to end a job if someone gets bugged out
