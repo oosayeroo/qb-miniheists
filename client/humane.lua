@@ -24,23 +24,8 @@ Citizen.CreateThread(function()
         scenario = Config.LabBossScenario,
         target = { 
             options = {
-                {
-                    type = "client",
-                    event = "qb-miniheists:LabRaid",
-                    icon = "fas fa-comment",
-                    label = "Start Lab Raid",
-                },
-                {
-                    type = "server",
-                    event = "qb-miniheists:RecievePaymentLab",
-                    icon = "fas fa-hand",
-                    label = "HandOver Research",
-                    item = { 
-                        "lab-usb",
-                        "lab-samples",
-                        "lab-files",
-                    },
-                },
+                {type = "client",event = "qb-miniheists:LabRaid",icon = "fas fa-comment",label = "Start Lab Raid",},
+                {type = "server",event = "qb-miniheists:RecievePaymentLab",icon = "fas fa-hand",label = "HandOver Research",item = { "lab-usb","lab-samples","lab-files",},},
             },
           distance = 2.5,
         },
@@ -52,21 +37,32 @@ end)
 RegisterNetEvent('qb-miniheists:LabRaid', function()
     if GotJob == false then
         TriggerEvent('animations:client:EmoteCommandStart', {"wait"})
-            QBCore.Functions.Progressbar('pickup', 'Getting Job...', 5000, false, true, {
-                disableMovement = true,
-                disableCarMovement = true,
-                disableMouse = false,
-                disableCombat = true,
-            }, {}, {}, {}, function()
+            QBCore.Functions.Progressbar('pickup', 'Getting Job...', 5000, false, true, {disableMovement = true,disableCarMovement = true,disableMouse = false,disableCombat = true,}, {}, {}, {}, function()
                 TriggerEvent('animations:client:EmoteCommandStart', {"c"})
                 QBCore.Functions.Notify('You will be emailed shortly with the location', 'primary')
                 if CurrentCops >= Config.MinimumPolice then
                     Wait(EmailTime)
-                    TriggerServerEvent('qb-phone:server:sendNewMail', {
-                    sender = 'Lugo Bervich',
-                    subject = 'Bio Research...',
-                    message = 'Heres the location. You Need to hack the firewall through the computer in laboratory 1 and then download that research. <br/> i will email again when i see the firewall is down!',
-                    })
+                    if Config.PhoneScript == 'qb' then
+                        TriggerServerEvent('qb-phone:server:sendNewMail', {sender = "Lugo Bervich",subject = "Bio Research...",
+                            message = "Heres the location. You Need to hack the firewall through the computer in laboratory 1 and then download that research. <br/> i will email again when i see the firewall is down!" ,
+                        })
+                    elseif Config.PhoneScript == 'qs' then
+                        TriggerServerEvent('qs-smartphone:server:sendNewMail', {sender = 'Lugo Bervich',subject = 'Bio Research...',
+                            message = "Heres the location. You Need to hack the firewall through the computer in laboratory 1 and then download that research. <br/> i will email again when i see the firewall is down!",
+                            button = {}
+                        })
+                    elseif Config.PhoneScript == 'road' then
+                        TriggerServerEvent('roadphone:receiveMail', {sender = 'Lugo Bervich',subject = "Bio Research...",
+                            message = "Heres the location. You Need to hack the firewall through the computer in laboratory 1 and then download that research. <br/> i will email again when i see the firewall is down!",
+                            image = '/public/html/static/img/icons/app/mail.png',
+                            button = {}
+                        })
+                    elseif Config.PhoneScript == 'gks' then
+                        TriggerServerEvent('gksphone:NewMail', {sender = 'Lugo Bervich',image = '/html/static/img/icons/mail.png',subject = "Bio Research...",
+                            message = "Heres the location. You Need to hack the firewall through the computer in laboratory 1 and then download that research. <br/> i will email again when i see the firewall is down!",
+                            button = {}
+                        })
+                    end
                     SetNewWaypoint(labcoords1)
                     ExportLabTarget1()
                     ExportSecurityTarget()
@@ -82,12 +78,7 @@ end)
 RegisterNetEvent('qb-miniheists:StartLabHack', function()
     if QBCore.Functions.HasItem(Config.HackItem) then
         TriggerEvent('animations:client:EmoteCommandStart', {"type"})
-        QBCore.Functions.Progressbar('cnct_elect', 'Bypassing Firewall...', HackingTime, false, true, {
-            disableMovement = true,
-            disableCarMovement = true,
-            disableMouse = false,
-            disableCombat = true,
-        }, {}, {}, {}, function()
+        QBCore.Functions.Progressbar('cnct_elect', 'Bypassing Firewall...', HackingTime, false, true, {disableMovement = true,disableCarMovement = true,disableMouse = false,disableCombat = true,}, {}, {}, {}, function()
         end)
         Wait(HackingTime)
         TriggerEvent('animations:client:EmoteCommandStart', {"type"})
@@ -96,12 +87,7 @@ RegisterNetEvent('qb-miniheists:StartLabHack', function()
                 Wait(100)
                 TriggerEvent('animations:client:EmoteCommandStart', {"type"})
                 Wait(500)
-                QBCore.Functions.Progressbar('po_usb', 'Downloading Research..', HackingTime, false, true, {
-                    disableMovement = true,
-                    disableCarMovement = true,
-                    disableMouse = false,
-                    disableCombat = true,
-                }, {}, {}, {}, function()
+                QBCore.Functions.Progressbar('po_usb', 'Downloading Research..', HackingTime, false, true, {disableMovement = true,disableCarMovement = true,disableMouse = false,disableCombat = true,}, {}, {}, {}, function()
                 end)
                 Wait(HackingTime)
                 TriggerEvent('animations:client:EmoteCommandStart', {"c"})
@@ -114,11 +100,27 @@ RegisterNetEvent('qb-miniheists:StartLabHack', function()
                 end
                 QBCore.Functions.Notify('You Successfully Downloaded the Research, Wait for New Email!', 'primary', 8000)
                 Wait(7500)
-                TriggerServerEvent('qb-phone:server:sendNewMail', {
-                    sender = 'Lugo Bervich',
-                    subject = 'Bio-Research...',
-                    message = 'Great you did it! now head to the Cold Room and bring me some samples of their work and any files you see!',
+                if Config.PhoneScript == 'qb' then
+                    TriggerServerEvent('qb-phone:server:sendNewMail', {sender = "Lugo Bervich",subject = "Bio Research...",
+                        message = "Great you did it! now head to the Cold Room and bring me some samples of their work and any files you see!" ,
                     })
+                elseif Config.PhoneScript == 'qs' then
+                    TriggerServerEvent('qs-smartphone:server:sendNewMail', {sender = 'Lugo Bervich',subject = 'Bio Research...',
+                        message = "Great you did it! now head to the Cold Room and bring me some samples of their work and any files you see!",
+                        button = {}
+                    })
+                elseif Config.PhoneScript == 'road' then
+                    TriggerServerEvent('roadphone:receiveMail', {sender = 'Lugo Bervich',subject = "Bio Research...",
+                        message = "Great you did it! now head to the Cold Room and bring me some samples of their work and any files you see!",
+                        image = '/public/html/static/img/icons/app/mail.png',
+                        button = {}
+                    })
+                elseif Config.PhoneScript == 'gks' then
+                    TriggerServerEvent('gksphone:NewMail', {sender = 'Lugo Bervich',image = '/html/static/img/icons/mail.png',subject = "Bio Research...",
+                        message = "Great you did it! now head to the Cold Room and bring me some samples of their work and any files you see!",
+                        button = {}
+                    })
+                end
                 RemoveLabTarget1()
                 ExportLabTarget2()
             else
@@ -137,12 +139,7 @@ end)
 
 RegisterNetEvent('qb-miniheists:StartLabHack2', function()
     TriggerEvent('animations:client:EmoteCommandStart', {"mechanic"})
-    QBCore.Functions.Progressbar('cnct_elect', 'Grabbing Samples and Files...', HackingTime, false, true, {
-        disableMovement = true,
-        disableCarMovement = true,
-        disableMouse = false,
-        disableCombat = true,
-    }, {}, {}, {}, function()
+    QBCore.Functions.Progressbar('cnct_elect', 'Grabbing Samples and Files...', HackingTime, false, true, {disableMovement = true,disableCarMovement = true,disableMouse = false,disableCombat = true,}, {}, {}, {}, function()
     end)
     Wait(HackingTime)
     TriggerEvent('animations:client:EmoteCommandStart', {"c"})
@@ -152,11 +149,27 @@ RegisterNetEvent('qb-miniheists:StartLabHack2', function()
     end
     QBCore.Functions.Notify('You got everything, Get out of there!', 'primary', 8000)
     Wait(7500)
-    TriggerServerEvent('qb-phone:server:sendNewMail', {
-        sender = 'Lugo Bervich',
-        subject = 'Bio-Research...',
-        message = 'Now Bring the Research, Samples and Files back to me for your payment!',
+    if Config.PhoneScript == 'qb' then
+        TriggerServerEvent('qb-phone:server:sendNewMail', {sender = "Lugo Bervich",subject = "Bio Research...",
+            message = "Now Bring the Research, Samples and Files back to me for your payment!" ,
         })
+    elseif Config.PhoneScript == 'qs' then
+        TriggerServerEvent('qs-smartphone:server:sendNewMail', {sender = 'Lugo Bervich',subject = 'Bio Research...',
+            message = "Now Bring the Research, Samples and Files back to me for your payment!",
+            button = {}
+        })
+    elseif Config.PhoneScript == 'road' then
+        TriggerServerEvent('roadphone:receiveMail', {sender = 'Lugo Bervich',subject = "Bio Research...",
+            message = "Now Bring the Research, Samples and Files back to me for your payment!",
+            image = '/public/html/static/img/icons/app/mail.png',
+            button = {}
+        })
+    elseif Config.PhoneScript == 'gks' then
+        TriggerServerEvent('gksphone:NewMail', {sender = 'Lugo Bervich',image = '/html/static/img/icons/mail.png',subject = "Bio Research...",
+            message = "Now Bring the Research, Samples and Files back to me for your payment!",
+            button = {}
+        })
+    end
     GotJob = false
     Finished = true
     SecurityBypass = false
@@ -166,12 +179,7 @@ end)
 RegisterNetEvent('qb-miniheists:BypassLabGuardAlarm', function()
     if QBCore.Functions.HasItem(Config.HackItem) then
         TriggerEvent('animations:client:EmoteCommandStart', {"type"})
-        QBCore.Functions.Progressbar('cnct_elect', 'Bypassing Security Alarms...', HackingTime, false, true, {
-            disableMovement = true,
-            disableCarMovement = true,
-            disableMouse = false,
-            disableCombat = true,
-        }, {}, {}, {}, function()
+        QBCore.Functions.Progressbar('cnct_elect', 'Bypassing Security Alarms...', HackingTime, false, true, {disableMovement = true,disableCarMovement = true,disableMouse = false,disableCombat = true,}, {}, {}, {}, function()
         end)
         Wait(HackingTime)
         TriggerEvent('animations:client:EmoteCommandStart', {"type"})
@@ -180,12 +188,7 @@ RegisterNetEvent('qb-miniheists:BypassLabGuardAlarm', function()
                 Wait(100)
                 TriggerEvent('animations:client:EmoteCommandStart', {"type"})
                 Wait(500)
-                QBCore.Functions.Progressbar('po_usb', 'Rerouting Alarm Checks..', HackingTime, false, true, {
-                    disableMovement = true,
-                    disableCarMovement = true,
-                    disableMouse = false,
-                    disableCombat = true,
-                }, {}, {}, {}, function()
+                QBCore.Functions.Progressbar('po_usb', 'Rerouting Alarm Checks..', HackingTime, false, true, {disableMovement = true,disableCarMovement = true,disableMouse = false,disableCombat = true,}, {}, {}, {}, function()
                 end)
                 Wait(HackingTime)
                 TriggerEvent('animations:client:EmoteCommandStart', {"c"})
@@ -268,13 +271,7 @@ function ExportLabTarget1()
         debugpoly = Config.DebugPoly,
     }, {
         options = {
-            {
-                type = "client",
-                event = "qb-miniheists:StartLabHack",
-                icon = "far fa-usb",
-                label = "Hack Research Files",
-                item = Config.HackItem,
-            },
+            {type = "client",event = "qb-miniheists:StartLabHack",icon = "far fa-usb",label = "Hack Research Files",item = Config.HackItem,},
         },
         distance = 2.0
     })
@@ -287,12 +284,7 @@ function ExportLabTarget2()
         debugpoly = Config.DebugPoly,
     }, {
         options = {
-            {
-                type = "client",
-                event = "qb-miniheists:StartLabHack2",
-                icon = "far fa-usb",
-                label = "Steal Samples",
-            },
+            {type = "client",event = "qb-miniheists:StartLabHack2",icon = "far fa-usb",label = "Steal Samples",},
         },
         distance = 2.0
     })
@@ -305,13 +297,7 @@ function ExportSecurityTarget()
         debugpoly = Config.DebugPoly,
     }, {
         options = {
-            {
-                type = "client",
-                event = "qb-miniheists:BypassLabGuardAlarm",
-                icon = "fas fa-shield",
-                label = "Bypass Security(1 Shot)",
-                item = Config.HackItem,
-            },
+            {type = "client",event = "qb-miniheists:BypassLabGuardAlarm",icon = "fas fa-shield",label = "Bypass Security(1 Shot)",item = Config.HackItem,},
         },
         distance = 2.0
     })

@@ -26,24 +26,9 @@ Citizen.CreateThread(function()
         scenario = Config.CarBossScenario,
         target = { 
             options = {
-                {
-                    type = "client",
-                    event = "qb-miniheists:getJobA",
-                    icon = "fas fa-car",
-                    label = "Start Low-Range Job",
-                },
-                {
-                    type = "client",
-                    event = "qb-miniheists:getJobB",
-                    icon = "fas fa-car",
-                    label = "Start Mid-Range Job",
-                },
-                {
-                    type = "client",
-                    event = "qb-miniheists:getJobC",
-                    icon = "fas fa-car",
-                    label = "Start High-Range Job",
-                },
+                {type = "client",event = "qb-miniheists:getJobA",icon = "fas fa-car",label = "Start Low-Range Job",},
+                {type = "client",event = "qb-miniheists:getJobB",icon = "fas fa-car",label = "Start Mid-Range Job",},
+                {type = "client",event = "qb-miniheists:getJobC",icon = "fas fa-car",label = "Start High-Range Job",},
             },
           distance = 2.5,
         },
@@ -59,11 +44,27 @@ RegisterNetEvent("qb-miniheists:getJobA", function()
             location = Config.CarHeistLocations.CarSpawn[math.random(1, #Config.CarHeistLocations.CarSpawn)]
             TriggerServerEvent('qb-miniheists:GiveTierAPrice')
             print("server event done")
-            TriggerServerEvent('qb-phone:server:sendNewMail', {
-                sender = "Mr Lynch",
-                subject = "Get This Car",
-                message = "Hey Man i got a small job for you. here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship" ,
-            })
+            if Config.PhoneScript == 'qb' then
+                TriggerServerEvent('qb-phone:server:sendNewMail', {sender = "Mr Lynch",subject = "Get This Car",
+                    message = "Hey Man i got a small job for you. here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship" ,
+                })
+            elseif Config.PhoneScript == 'qs' then
+                TriggerServerEvent('qs-smartphone:server:sendNewMail', {sender = 'Mr Lynch',subject = 'Get This Car',
+                    message = "Hey Man i got a small job for you. here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship",
+                    button = {}
+                })
+            elseif Config.PhoneScript == 'road' then
+                TriggerServerEvent('roadphone:receiveMail', {sender = 'Mr Lynch',subject = "Get This Car",
+                    message = "Hey Man i got a small job for you. here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship",
+                    image = '/public/html/static/img/icons/app/mail.png',
+                    button = {}
+                })
+            elseif Config.PhoneScript == 'gks' then
+                TriggerServerEvent('gksphone:NewMail', {sender = 'Mr Lynch',image = '/html/static/img/icons/mail.png',subject = "Get This Car",
+                    message = "Hey Man i got a small job for you. here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship",
+                    button = {}
+                })
+            end
             GotJob = true
             GotJobA = true
             Finished = false
@@ -82,11 +83,27 @@ RegisterNetEvent("qb-miniheists:getJobB", function()
             carmodel = Config.VehicleTierB.BoostVehicles[math.random(1, #Config.VehicleTierB.BoostVehicles)]
             location = Config.CarHeistLocations.CarSpawn[math.random(1, #Config.CarHeistLocations.CarSpawn)]
             TriggerServerEvent('qb-miniheists:GiveTierBPrice')
-            TriggerServerEvent('qb-phone:server:sendNewMail', {
-                sender = "Mr Lynch",
-                subject = "Get This Car",
-                message = "Hey got a nice motor for you today! <br/> Location: <br/> "..location.name.."<br/> Car Model: "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship" ,
-            })
+            if Config.PhoneScript == 'qb' then
+                TriggerServerEvent('qb-phone:server:sendNewMail', {sender = "Mr Lynch",subject = "Get This Car",
+                    message = "Hey got a nice motor for you today! here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship" ,
+                })
+            elseif Config.PhoneScript == 'qs' then
+                TriggerServerEvent('qs-smartphone:server:sendNewMail', {sender = 'Mr Lynch',subject = 'Get This Car',
+                    message = "Hey got a nice motor for you today! here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship",
+                    button = {}
+                })
+            elseif Config.PhoneScript == 'road' then
+                TriggerServerEvent('roadphone:receiveMail', {sender = 'Mr Lynch',subject = "Get This Car",
+                    message = "Hey got a nice motor for you today! here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship",
+                    image = '/public/html/static/img/icons/app/mail.png',
+                    button = {}
+                })
+            elseif Config.PhoneScript == 'gks' then
+                TriggerServerEvent('gksphone:NewMail', {sender = 'Mr Lynch',image = '/html/static/img/icons/mail.png',subject = "Get This Car",
+                    message = "Hey got a nice motor for you today! here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship",
+                    button = {}
+                })
+            end
             GotJob = true
             GotJobB = true
             Finished = false
@@ -105,11 +122,27 @@ RegisterNetEvent("qb-miniheists:getJobC", function()
             carmodel = Config.VehicleTierC.BoostVehicles[math.random(1, #Config.VehicleTierC.BoostVehicles)]
             location = Config.CarHeistLocations.CarSpawn[math.random(1, #Config.CarHeistLocations.CarSpawn)]
             TriggerServerEvent('qb-miniheists:GiveTierCPrice')
-            TriggerServerEvent('qb-phone:server:sendNewMail', {
-                sender = "Mr Lynch",
-                subject = "Get This Car",
-                message = "Hey i got a real pretty ride for you today. check this out! <br/> Location: <br/> "..location.name.."<br/> Car Model: "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship" ,
-            })
+            if Config.PhoneScript == 'qb' then
+                TriggerServerEvent('qb-phone:server:sendNewMail', {sender = "Mr Lynch",subject = "Get This Car",
+                    message = "Hey i got a real pretty ride for you today. here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship" ,
+                })
+            elseif Config.PhoneScript == 'qs' then
+                TriggerServerEvent('qs-smartphone:server:sendNewMail', {sender = 'Mr Lynch',subject = 'Get This Car',
+                    message = "Hey i got a real pretty ride for you today. here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship",
+                    button = {}
+                })
+            elseif Config.PhoneScript == 'road' then
+                TriggerServerEvent('roadphone:receiveMail', {sender = 'Mr Lynch',subject = "Get This Car",
+                    message = "Hey i got a real pretty ride for you today. here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship",
+                    image = '/public/html/static/img/icons/app/mail.png',
+                    button = {}
+                })
+            elseif Config.PhoneScript == 'gks' then
+                TriggerServerEvent('gksphone:NewMail', {sender = 'Mr Lynch',image = '/html/static/img/icons/mail.png',subject = "Get This Car",
+                    message = "Hey i got a real pretty ride for you today. here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship",
+                    button = {}
+                })
+            end
             GotJob = true
             GotJobC = true
             Finished = false
@@ -125,12 +158,7 @@ end)
 RegisterNetEvent("qb-miniheists:DeliverVehicleA", function()
     local vehicle = GetVehiclePedIsIn(PlayerPedId(), true)
     if not Finished and GotJob and GotJobA then
-        QBCore.Functions.Progressbar('delv', 'Loading Vehicle To Ship', Config.LoadingTime*1000, false, true, {
-            disableMovement = true,
-            disableCarMovement = true,
-            disableMouse = false,
-            disableCombat = true,
-        }, {}, {}, {}, function()
+        QBCore.Functions.Progressbar('delv', 'Loading Vehicle To Ship', Config.LoadingTime*1000, false, true, {disableMovement = true,disableCarMovement = true,disableMouse = false,disableCombat = true,}, {}, {}, {}, function()
             TriggerServerEvent("qb-miniheists:getRewardA")
             Wait(0)
             DeleteVehicle(vehicle)
@@ -150,12 +178,7 @@ end)
 RegisterNetEvent("qb-miniheists:DeliverVehicleB", function()
     local vehicle = GetVehiclePedIsIn(PlayerPedId(), true)
     if not Finished and GotJob and GotJobB then
-        QBCore.Functions.Progressbar('delv', 'Loading Vehicle To Ship', Config.LoadingTime*1000, false, true, {
-            disableMovement = true,
-            disableCarMovement = true,
-            disableMouse = false,
-            disableCombat = true,
-        }, {}, {}, {}, function()
+        QBCore.Functions.Progressbar('delv', 'Loading Vehicle To Ship', Config.LoadingTime*1000, false, true, {disableMovement = true,disableCarMovement = true,disableMouse = false,disableCombat = true,}, {}, {}, {}, function()
             TriggerServerEvent("qb-miniheists:getRewardB")
             Wait(0)
             DeleteVehicle(vehicle)
@@ -175,12 +198,7 @@ end)
 RegisterNetEvent("qb-miniheists:DeliverVehicleC", function()
     local vehicle = GetVehiclePedIsIn(PlayerPedId(), true)
     if not Finished and GotJob and GotJobC then
-        QBCore.Functions.Progressbar('delv', 'Loading Vehicle To Ship', Config.LoadingTime*1000, false, true, {
-            disableMovement = true,
-            disableCarMovement = true,
-            disableMouse = false,
-            disableCombat = true,
-        }, {}, {}, {}, function()
+        QBCore.Functions.Progressbar('delv', 'Loading Vehicle To Ship', Config.LoadingTime*1000, false, true, {disableMovement = true,disableCarMovement = true,disableMouse = false,disableCombat = true,}, {}, {}, {}, function()
             TriggerServerEvent("qb-miniheists:getRewardC")
             Wait(0)
             DeleteVehicle(vehicle)
@@ -202,12 +220,7 @@ RegisterNetEvent("qb-miniheists:ScrapVehicle", function()
     if not Finished and GotJob then
         print("scrapcheck")
         TriggerServerEvent('police:server:policeAlert', 'Stolen Car Sighted')
-        QBCore.Functions.Progressbar('delv', 'Scrapping Vehicle', Config.ScrapTime*1000, false, true, {
-            disableMovement = true,
-            disableCarMovement = true,
-            disableMouse = false,
-            disableCombat = true,
-        }, {}, {}, {}, function()
+        QBCore.Functions.Progressbar('delv', 'Scrapping Vehicle', Config.ScrapTime*1000, false, true, {disableMovement = true,disableCarMovement = true,disableMouse = false,disableCombat = true,}, {}, {}, {}, function()
             TriggerServerEvent("qb-miniheists:GetScrapReward")
             Wait(0)
             DeleteVehicle(vehicle)

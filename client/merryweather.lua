@@ -23,19 +23,8 @@ Citizen.CreateThread(function()
         scenario = Config.MWBossScenario,
         target = { 
             options = {
-                {
-                    type = "client",
-                    event = "qb-miniheists:StartMWRaid",
-                    icon = "fas fa-comment",
-                    label = "Start MerryWeather Raid",
-                },
-                {
-                    type = "server",
-                    event = "qb-miniheists:ReceivePaymentMW",
-                    icon = "fas fa-hand",
-                    label = "Receive Payment",
-                    item = "mw-usb",
-                },
+                {type = "client",event = "qb-miniheists:StartMWRaid",icon = "fas fa-comment",label = "Start MerryWeather Raid",},
+                {type = "server",event = "qb-miniheists:ReceivePaymentMW",icon = "fas fa-hand",label = "Receive Payment",item = "mw-usb",},
             },
           distance = 2.5,
         },
@@ -47,21 +36,32 @@ end)
 RegisterNetEvent('qb-miniheists:StartMWRaid', function()
     if GotJob == false then
         TriggerEvent('animations:client:EmoteCommandStart', {"wait"})
-            QBCore.Functions.Progressbar('pickup', 'Getting Job...', 5000, false, true, {
-                disableMovement = true,
-                disableCarMovement = true,
-                disableMouse = false,
-                disableCombat = true,
-            }, {}, {}, {}, function()
+            QBCore.Functions.Progressbar('pickup', 'Getting Job...', 5000, false, true, {disableMovement = true,disableCarMovement = true,disableMouse = false,disableCombat = true,}, {}, {}, {}, function()
                 TriggerEvent('animations:client:EmoteCommandStart', {"c"})
                 QBCore.Functions.Notify('You will be emailed shortly with the location', 'primary')
                 if CurrentCops >= Config.MinimumPolice then
                     Wait(EmailTime)
-                    TriggerServerEvent('qb-phone:server:sendNewMail', {
-                    sender = 'Frank Castle',
-                    subject = 'Top Secret Documents...',
-                    message = 'Heres the location. you will need to hack each terminal in the office until you gain access to the locked pc. <br/> watch out for the guards. take friends with you and lots of guns!',
-                    })
+                    if Config.PhoneScript == 'qb' then
+                        TriggerServerEvent('qb-phone:server:sendNewMail', {sender = "Frank Castle",subject = "Top Secret Documents...",
+                            message = "Heres the location. you will need to hack each terminal in the office until you gain access to the locked pc. <br/> watch out for the guards. take friends with you and lots of guns!" ,
+                        })
+                    elseif Config.PhoneScript == 'qs' then
+                        TriggerServerEvent('qs-smartphone:server:sendNewMail', {sender = 'Frank Castle',subject = 'Top Secret Documents...',
+                            message = "Heres the location. you will need to hack each terminal in the office until you gain access to the locked pc. <br/> watch out for the guards. take friends with you and lots of guns!",
+                            button = {}
+                        })
+                    elseif Config.PhoneScript == 'road' then
+                        TriggerServerEvent('roadphone:receiveMail', {sender = 'Frank Castle',subject = "Top Secret Documents...",
+                            message = "Heres the location. you will need to hack each terminal in the office until you gain access to the locked pc. <br/> watch out for the guards. take friends with you and lots of guns!",
+                            image = '/public/html/static/img/icons/app/mail.png',
+                            button = {}
+                        })
+                    elseif Config.PhoneScript == 'gks' then
+                        TriggerServerEvent('gksphone:NewMail', {sender = 'Frank Castle',image = '/html/static/img/icons/mail.png',subject = "Top Secret Documents...",
+                            message = "Heres the location. you will need to hack each terminal in the office until you gain access to the locked pc. <br/> watch out for the guards. take friends with you and lots of guns!",
+                            button = {}
+                        })
+                    end
                     SetNewWaypoint(mwcoords)
                     ExportMW1Target()
                 else
@@ -76,12 +76,7 @@ end)
 RegisterNetEvent('qb-miniheists:MWHack1', function()
     if QBCore.Functions.HasItem(Config.HackItem) then
         TriggerEvent('animations:client:EmoteCommandStart', {"type"})
-        QBCore.Functions.Progressbar('cnct_elect', 'Installing Sub-Routines...', HackingTime, false, true, {
-            disableMovement = true,
-            disableCarMovement = true,
-            disableMouse = false,
-            disableCombat = true,
-        }, {}, {}, {}, function()
+        QBCore.Functions.Progressbar('cnct_elect', 'Installing Sub-Routines...', HackingTime, false, true, {disableMovement = true,disableCarMovement = true,disableMouse = false,disableCombat = true,}, {}, {}, {}, function()
         end)
         Wait(HackingTime)
         TriggerEvent('animations:client:EmoteCommandStart', {"type"})
@@ -90,12 +85,7 @@ RegisterNetEvent('qb-miniheists:MWHack1', function()
                 Wait(100)
                 TriggerEvent('animations:client:EmoteCommandStart', {"type"})
                 Wait(500)
-                QBCore.Functions.Progressbar('po_usb', 'Rerouting Controls..', HackingTime, false, true, {
-                    disableMovement = true,
-                    disableCarMovement = true,
-                    disableMouse = false,
-                    disableCombat = true,
-                }, {}, {}, {}, function()
+                QBCore.Functions.Progressbar('po_usb', 'Rerouting Controls..', HackingTime, false, true, {disableMovement = true,disableCarMovement = true,disableMouse = false,disableCombat = true,}, {}, {}, {}, function()
                 end)
                 Wait(HackingTime)
                 TriggerEvent('animations:client:EmoteCommandStart', {"c"})
@@ -127,12 +117,7 @@ end)
 RegisterNetEvent('qb-miniheists:MWHackFinal', function()
     if QBCore.Functions.HasItem(Config.HackItem) then
         TriggerEvent('animations:client:EmoteCommandStart', {"type"})
-        QBCore.Functions.Progressbar('cnct_elect', 'Braking Final Firewall...', HackingTime, false, true, {
-            disableMovement = true,
-            disableCarMovement = true,
-            disableMouse = false,
-            disableCombat = true,
-        }, {}, {}, {}, function()
+        QBCore.Functions.Progressbar('cnct_elect', 'Braking Final Firewall...', HackingTime, false, true, {disableMovement = true,disableCarMovement = true,disableMouse = false,disableCombat = true,}, {}, {}, {}, function()
         end)
         Wait(HackingTime)
         TriggerEvent('animations:client:EmoteCommandStart', {"type"})
@@ -141,12 +126,7 @@ RegisterNetEvent('qb-miniheists:MWHackFinal', function()
                 Wait(100)
                 TriggerEvent('animations:client:EmoteCommandStart', {"type"})
                 Wait(500)
-                QBCore.Functions.Progressbar('po_usb', 'Downloading Top Secret Files..', HackingTime, false, true, {
-                    disableMovement = true,
-                    disableCarMovement = true,
-                    disableMouse = false,
-                    disableCombat = true,
-                }, {}, {}, {}, function()
+                QBCore.Functions.Progressbar('po_usb', 'Downloading Top Secret Files..', HackingTime, false, true, {disableMovement = true,disableCarMovement = true,disableMouse = false,disableCombat = true,}, {}, {}, {}, function()
                 end)
                 Wait(HackingTime)
                 TriggerEvent('animations:client:EmoteCommandStart', {"c"})
@@ -237,19 +217,13 @@ function ExportMW1Target()
     elseif MWHacksDone == 4 then
         mwloc = vector3(565.11, -3124.44, 18.74)
     end
-    exports['qb-target']:AddBoxZone("mw1-hack", mwloc, 1, 1, {
+    exports['qb-target']:AddBoxZone("mw1-hack", mwloc, 2, 2, {
         name="mw1-hack",
         heading=90,
         debugpoly = Config.DebugPoly,
     }, {
         options = {
-            {
-                type = "client",
-                event = "qb-miniheists:MWHack1",
-                icon = "fas fa-shield",
-                label = "Install Sub-routines",
-                item = Config.HackItem,
-            },
+            {type = "client",event = "qb-miniheists:MWHack1",icon = "fas fa-shield",label = "Install Sub-routines",item = Config.HackItem,},
         },
         distance = 2.0
     })
@@ -263,13 +237,7 @@ function ExportMWFinalTarget()
         debugpoly = Config.DebugPoly,
     }, {
         options = {
-            {
-                type = "client",
-                event = "qb-miniheists:MWHackFinal",
-                icon = "fas fa-hand",
-                label = "Extract Files",
-                item = Config.HackItem,
-            },
+            {type = "client",event = "qb-miniheists:MWHackFinal",icon = "fas fa-hand",label = "Extract Files",item = Config.HackItem,},
         },
         distance = 2.0
     })
