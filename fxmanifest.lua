@@ -6,7 +6,7 @@ author 'oosayeroo'
 
 description 'qb-miniheists using qb-target'
 
-version '2.1.0'
+version '2.2.0'
 
 client_scripts {
 	'client/main.lua',
