@@ -16,6 +16,40 @@ RegisterNetEvent('police:SetCopCount', function(amount)
 end)
 
 Citizen.CreateThread(function()
+    if Config.Target == 'ox' then
+        lib.requestModel(Config.CarBossModel)
+        local coords = Config.CarBossLocation
+        local MWPed = CreatePed(0, 'g_m_importexport_01', coords.x, coords.y, coords.z - 1.0, coords.w, false, false)
+        FreezeEntityPosition(MWPed, true)
+        SetEntityInvincible(MWPed, true)
+        SetBlockingOfNonTemporaryEvents(MWPed, true)
+    
+        exports.ox_target:addSphereZone({
+            coords = Config.CarBossLocation,
+            radius = 0.5,
+            debug = false,
+            options = {
+                {
+                    name = 'cbjoba',
+                    event = 'qb-miniheists:getJobA',
+                    icon = 'fas fa-car',
+                    label = "Start Low-Range Boost",
+                },
+                {
+                    name = 'cbjobb',
+                    serverEvent = 'qb-miniheists:getJobB',
+                    icon = 'fas fa-car',
+                    label = "Start Mid-Range Boost",
+                },
+                {
+                    name = 'cbjobc',
+                    serverEvent = 'qb-miniheists:getJobC',
+                    icon = 'fas fa-car',
+                    label = "Start High-Range Boost",
+                }
+            }
+        })
+elseif Config.Target == 'qb' then 
     exports['qb-target']:SpawnPed({
         model = Config.CarBossModel,
         coords = Config.CarBossLocation, 
@@ -33,6 +67,7 @@ Citizen.CreateThread(function()
           distance = 2.5,
         },
     })
+    end
 end)
 
 --car heist Stuff -------------------------------------------------------------------------------------------------
@@ -219,6 +254,9 @@ RegisterNetEvent("qb-miniheists:ScrapVehicle", function()
     local vehicle = GetVehiclePedIsIn(PlayerPedId(), true)
     if not Finished and GotJob then
         print("scrapcheck")
+        if Config.PoliceNofityType == 'ps' then
+            exports['ps-dispatch']:CarBoosting()
+        elseif Config.PoliceAlertType == 'qb' then
         TriggerServerEvent('police:server:policeAlert', 'Stolen Car Sighted')
         QBCore.Functions.Progressbar('delv', 'Scrapping Vehicle', Config.ScrapTime*1000, false, true, {disableMovement = true,disableCarMovement = true,disableMouse = false,disableCombat = true,}, {}, {}, {}, function()
             TriggerServerEvent("qb-miniheists:GetScrapReward")
@@ -237,8 +275,9 @@ RegisterNetEvent("qb-miniheists:ScrapVehicle", function()
             GotJobB = false
             GotJobC = false
             Finished = true
-        end)
-     end
+            end)
+        end
+    end
 end)
 
 RegisterNetEvent('qb-miniheists:TierCheck', function()
