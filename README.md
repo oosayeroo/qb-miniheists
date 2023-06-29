@@ -1,4 +1,4 @@
-# qb-miniheists
+# cerberus-miniheists
 3 simple mini heists for beginners. lets you configure the reward payments and random items you may get from doing a heist. 
 i plan to add more heists to it. feel free to request one
 
@@ -10,8 +10,10 @@ Uses the latest versions
 ```
 -Qb-core 
 -qb-menu 
--qb-target
+-qb-target or ox_target
 -ps-ui found here https://github.com/Project-Sloth/ps-ui  (used for minigames)
+-optional: ps-dispatch for police events found ehere https://github.com/Project-Sloth/ps-dispatch
+
 ```
 
 ## Add to qb-core/shared/items.lua
