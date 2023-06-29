@@ -2,9 +2,9 @@ fx_version 'cerulean'
 
 game 'gta5'
 
-author 'oosayeroo'
+author 'scarfoxed'
 
-description 'qb-miniheists using qb-target'
+description 'miniheists using targeting with hacks and npcs'
 
 version '2.2.0'
 
@@ -21,4 +21,7 @@ server_scripts {
 
 shared_scripts{
     'config.lua',
+	'@ox_lib/init.lua',
 }
+
+lua54 'yes'
