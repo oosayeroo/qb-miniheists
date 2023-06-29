@@ -58,41 +58,46 @@ RegisterNetEvent('qb-miniheists:GrabSamples', function()
     TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['lab-files'], 'add')
 end)
 
+local function HasItems()
+    return QBCore.Functions.HasItem("lab-usb") and 
+    QBCore.Functions.HasItem("lab-samples") and 
+    QBCore.Functions.HasItem("lab-files")
+end
+
 RegisterNetEvent('qb-miniheists:RecievePaymentLab', function()
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    local required1 = 'lab-usb'
-    local required2 = 'lab-samples'
-    local required3 = 'lab-files'
     local item = Config.LabRewards[math.random(1, #Config.LabRewards)]
     local amount = Config.LabRewardAmount
     local chance = math.random(100)
-    
-    Player.Functions.RemoveItem(required1, 1)
-    Player.Functions.RemoveItem(required2, 1)
-    Player.Functions.RemoveItem(required3, 1)
+    if HasItems() then
+    Player.Functions.RemoveItem("lab-usb", 1)
+    Player.Functions.RemoveItem("lab-samples", 1)
+    Player.Functions.RemoveItem("lab-files", 1)
     Player.Functions.AddMoney(MoneyType, math.random(Config.PaymentLabMin, Config.PaymentLabMax))
-    
     if chance<=Config.LabItemChance then
         Player.Functions.AddItem(item, amount)
-        TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], 'add')
+        end
+    else
+        TriggerClientEvent('QBCore:Notify', src, 'Bring me the required items', 'info', 5000)
     end
 end)
 
 RegisterNetEvent('qb-miniheists:ReceivePaymentMW', function()
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    local required = 'mw-usb'
     local item = Config.MWRewards[math.random(1, #Config.MWRewards)]
     local amount = Config.MWRewardAmount
     local chance = math.random(100)
-    
-    Player.Functions.RemoveItem(required, 1)
-    Player.Functions.AddMoney(MoneyType, math.random(Config.PaymentMWMin, Config.PaymentMWMax))
-    
+    if QBCore.Functions.HasItem("mw-usb") then
+        Player.Functions.RemoveItem("mw-usb", 1)
+        Player.Functions.AddMoney(MoneyType, math.random(Config.PaymentMWMin, Config.PaymentMWMax))
     if chance<=Config.MWItemChance then
         Player.Functions.AddItem(item, amount)
         TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], 'add')
+        end
+    else
+        TriggerClientEvent('QBCore:Notify',src, 'Bring me the required items', 'info', 5000)
     end
 end)
 
