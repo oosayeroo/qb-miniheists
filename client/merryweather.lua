@@ -14,7 +14,7 @@ end)
 
 Citizen.CreateThread(function()
     if Config.Target == 'ox' then
-        lib.requestModel(g_f_y_vagos_01)
+        lib.requestModel(Config.MWBossModel)
         local coords = Config.MWBossLocation
         local MWPed = CreatePed(0, 'g_f_y_vagos_01', coords.x, coords.y, coords.z - 1.0, coords.w, false, false)
         FreezeEntityPosition(MWPed, true)
@@ -33,7 +33,7 @@ Citizen.CreateThread(function()
                     label = "Start MerryWeather Raid",
                 },
                 {
-                    name = 'labraidpayment',
+                    name = 'mwraidpayment',
                     serverEvent = 'qb-miniheists:ReceivePaymentMW',
                     icon = 'fas fa-hand',
                     label = "Recieve Payment",
