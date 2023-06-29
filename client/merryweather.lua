@@ -14,7 +14,7 @@ end)
 
 Citizen.CreateThread(function()
     if Config.Target == 'ox' then
-        lib.requestModel(Config.MWBossModel)
+        lib.requestModel(g_f_y_vagos_01)
         local coords = Config.MWBossLocation
         local MWPed = CreatePed(0, 'g_f_y_vagos_01', coords.x, coords.y, coords.z - 1.0, coords.w, false, false)
         FreezeEntityPosition(MWPed, true)
@@ -22,7 +22,7 @@ Citizen.CreateThread(function()
         SetBlockingOfNonTemporaryEvents(MWPed, true)
     
         exports.ox_target:addSphereZone({
-            coords = Config.LabBossLocation,
+            coords = Config.MWBossLocation,
             radius = 0.5,
             debug = false,
             options = {
