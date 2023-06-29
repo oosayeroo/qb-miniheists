@@ -13,6 +13,34 @@ RegisterNetEvent('police:SetCopCount', function(amount)
 end)
 
 Citizen.CreateThread(function()
+    if Config.Target == 'ox' then
+        lib.requestModel(Config.MWBossModel)
+        local coords = Config.MWBossLocation
+        local MWPed = CreatePed(0, 'g_f_y_vagos_01', coords.x, coords.y, coords.z - 1.0, coords.w, false, false)
+        FreezeEntityPosition(MWPed, true)
+        SetEntityInvincible(MWPed, true)
+        SetBlockingOfNonTemporaryEvents(MWPed, true)
+    
+        exports.ox_target:addSphereZone({
+            coords = Config.LabBossLocation,
+            radius = 0.5,
+            debug = false,
+            options = {
+                {
+                    name = 'mwraid',
+                    event = 'qb-miniheists:StartMWRaid',
+                    icon = 'fas fa-key',
+                    label = "Start MerryWeather Raid",
+                },
+                {
+                    name = 'labraidpayment',
+                    serverEvent = 'qb-miniheists:ReceivePaymentMW',
+                    icon = 'fas fa-hand',
+                    label = "Recieve Payment",
+                }
+            }
+        })
+elseif Config.Target == 'qb' then 
     exports['qb-target']:SpawnPed({
         model = Config.MWBossModel,
         coords = Config.MWBossLocation, 
@@ -29,6 +57,7 @@ Citizen.CreateThread(function()
           distance = 2.5,
         },
     })
+    end
 end)
 
 -- MW Raid Stuff WIP ------------------------------------------------------------------------------------------
@@ -104,7 +133,11 @@ RegisterNetEvent('qb-miniheists:MWHack1', function()
                 TriggerEvent('animations:client:EmoteCommandStart', {"c"})
                 QBCore.Functions.Notify('You failed Hacking, try again', 'error', 5000)
                 if Config.PoliceAlertMW then
+                    if Config.PoliceNofityType == 'ps' then
+                        exports['ps-dispatch']:MerryweatherRobbery()
+                    elseif Config.PoliceAlertType == 'qb' then
                     TriggerServerEvent('police:server:policeAlert', 'Hack Detected at Merryweather Warehouse!')
+                    end
                 end
                 TriggerServerEvent('qb-miniheists:gathermwnpc')
             end
@@ -217,7 +250,22 @@ function ExportMW1Target()
     elseif MWHacksDone == 4 then
         mwloc = vector3(565.11, -3124.44, 18.74)
     end
-    exports['qb-target']:AddBoxZone("mw1-hack", mwloc, 2, 2, {
+    if Config.Target == 'ox' then
+        exports.ox_target:addSphereZone({
+            coords = mwcoords,
+            radius = 0.5,
+            debug = false,
+            options = {
+                {
+                    name = 'mw1-hack',
+                    event = 'qb-miniheists:MWHack1',
+                    icon = 'fas fa-shield',
+                    label = "Install Sub-Routines",
+                }
+            }
+        })
+    elseif Config.Target == 'qb' then
+    exports['qb-target']:AddBoxZone("mw1-hack", mwcoords, 2, 2, {
         name="mw1-hack",
         heading=90,
         debugpoly = Config.DebugPoly,
@@ -227,10 +275,26 @@ function ExportMW1Target()
         },
         distance = 2.0
     })
+    end
 end
 
 
 function ExportMWFinalTarget()
+    if Config.Target == 'ox' then
+        exports.ox_target:addSphereZone({
+            coords = vector3(569.47, -3127.44, 18.57),
+            radius = 0.5,
+            debug = false,
+            options = {
+                {
+                    name = 'mw1-hack',
+                    event = 'qb-miniheists:MWHackFinal',
+                    icon = 'fas fa-hand',
+                    label = "Extract Files",
+                }
+            }
+        })
+    elseif Config.Target == 'qb' then
     exports['qb-target']:AddBoxZone("mwfinal", vector3(569.47, -3127.44, 18.57), 1, 1, {
         name="mwfinal",
         heading=173,
@@ -241,12 +305,21 @@ function ExportMWFinalTarget()
         },
         distance = 2.0
     })
+    end
 end
 
 function RemoveMW1Target()
-    exports['qb-target']:RemoveZone("mw1-hack")
+    if Config.Target == 'ox' then
+        exports.ox_target:removeZone("mw1-hack")
+    elseif Config.Target == 'qb' then
+        exports['qb-target']:RemoveZone("mw1-hack")
+    end
 end
 
 function RemoveMWFinalTarget()
-    exports['qb-target']:RemoveZone("mwfinal")
+    if Config.Target == 'ox' then
+        exports.ox_target:removeZone("mwfinal")
+    elseif Config.Target == 'qb' then
+        exports['qb-target']:RemoveZone("mwfinal")
+    end
 end
