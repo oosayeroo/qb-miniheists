@@ -6,8 +6,9 @@ Config.PhoneScript = 'qb'
 -- qs = quasar smartphone
 -- road = roadphone
 -- gks = gks phone
-
-Config.DebugHeists = false -- true for testing
+Config.Target = 'ox' -- 'ox' for ox_target, 'qb' for qb-target 
+Config.PoliceNotifyType = 'ps' -- ps for ps-dispatch police alert, qb for default qb alerts
+Config.DebugHeists = true -- true for testing
 Config.DebugPoly = true
 Config.AddEndJobCommand = true --adds slash commands to end a job if someone gets bugged out
 
@@ -15,7 +16,7 @@ Config.MinimumPolice = 0 --change this to whatever you like
 Config.PoliceAlertLab = true
 Config.PoliceAlertMW = true
 Config.MoneyType = 'cash'  -- cash/bank/blackmoney   -- whatever your server uses
-Config.EmailTime = 30 --how many seconds after accepting job before you ge the email for it
+Config.EmailTime = 20 --how many seconds after accepting job before you ge the email for it
 
 --====Hack stuff====--
 
@@ -44,10 +45,10 @@ Config.LabRewards = {  --rare items add as many as you like
 Config.LabRewardAmount = 2 -- how many of the rare item you receive
 
 ---====LAB GUARDS====---
-Config.LabGuardAccuracy = 75 --out of 100 how accurate guards are
+Config.LabGuardAccuracy = 30 --out of 100 how accurate guards are
 Config.LabGuardWeapon = { --this must be the weapon hash not just the weapon item name --this randomises between different guns everytime the guards are spawned
-    `WEAPON_PISTOL`,
-    `WEAPON_COMBATPDW`,
+    `WEAPON_FNX45`,
+    `WEAPON_GLOCK22`,
 }
 
 Config['labsecurity'] = {
