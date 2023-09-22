@@ -236,7 +236,7 @@ function SpawnGuardsLab()
 
     for k, v in pairs(Config['labsecurity']['labpatrol']) do
         loadModel(v['model'])
-        labsecurity['labpatrol'][k] = CreatePed(26, GetHashKey(v['model']), v['coords'], v['heading'], true, true)
+        labsecurity['labpatrol'][k] = CreatePed(26, GetHashKey(v['model']), v['coords'], v['heading'], true, false)
         NetworkRegisterEntityAsNetworked(labsecurity['labpatrol'][k])
         networkID = NetworkGetNetworkIdFromEntity(labsecurity['labpatrol'][k])
         SetNetworkIdCanMigrate(networkID, true)
