@@ -177,7 +177,7 @@ function SpawnGuardsMW()
 
     for k, v in pairs(Config['MWsecurity']['mwpatrol']) do
         loadModel(v['model'])
-        MWsecurity['mwpatrol'][k] = CreatePed(26, GetHashKey(v['model']), v['coords'], v['heading'], true, true)
+        MWsecurity['mwpatrol'][k] = CreatePed(26, GetHashKey(v['model']), v['coords'], v['heading'], true, false)
         NetworkRegisterEntityAsNetworked(MWsecurity['mwpatrol'][k])
         networkID = NetworkGetNetworkIdFromEntity(MWsecurity['mwpatrol'][k])
         SetNetworkIdCanMigrate(networkID, true)
