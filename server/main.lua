@@ -155,3 +155,16 @@ end)
 QBCore.Commands.Add("resetheists", "resets heist parameters", {}, false, function(source) 
     TriggerClientEvent("qb-miniheists:EndHeistCommand", source, false) 
 end)
+
+RegisterNetEvent('qb-miniheists:SendServerMail', function(sender,subject,msg)
+    if Config.PhoneScript == 'lb' then
+        local number = exports["lb-phone"]:GetEquippedPhoneNumber(source)
+        if number ~= nil then
+            exports["lb-phone"]:SendMail({
+                to = number,
+                subject = subject,
+                message = msg,
+            })
+        end
+    end
+end)

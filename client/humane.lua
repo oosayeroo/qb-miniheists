@@ -42,27 +42,8 @@ RegisterNetEvent('qb-miniheists:LabRaid', function()
                 QBCore.Functions.Notify('You will be emailed shortly with the location', 'primary')
                 if CurrentCops >= Config.MinimumPolice then
                     Wait(EmailTime)
-                    if Config.PhoneScript == 'qb' then
-                        TriggerServerEvent('qb-phone:server:sendNewMail', {sender = "Lugo Bervich",subject = "Bio Research...",
-                            message = "Heres the location. You Need to hack the firewall through the computer in laboratory 1 and then download that research. <br/> i will email again when i see the firewall is down!" ,
-                        })
-                    elseif Config.PhoneScript == 'qs' then
-                        TriggerServerEvent('qs-smartphone:server:sendNewMail', {sender = 'Lugo Bervich',subject = 'Bio Research...',
-                            message = "Heres the location. You Need to hack the firewall through the computer in laboratory 1 and then download that research. <br/> i will email again when i see the firewall is down!",
-                            button = {}
-                        })
-                    elseif Config.PhoneScript == 'road' then
-                        TriggerServerEvent('roadphone:receiveMail', {sender = 'Lugo Bervich',subject = "Bio Research...",
-                            message = "Heres the location. You Need to hack the firewall through the computer in laboratory 1 and then download that research. <br/> i will email again when i see the firewall is down!",
-                            image = '/public/html/static/img/icons/app/mail.png',
-                            button = {}
-                        })
-                    elseif Config.PhoneScript == 'gks' then
-                        TriggerServerEvent('gksphone:NewMail', {sender = 'Lugo Bervich',image = '/html/static/img/icons/mail.png',subject = "Bio Research...",
-                            message = "Heres the location. You Need to hack the firewall through the computer in laboratory 1 and then download that research. <br/> i will email again when i see the firewall is down!",
-                            button = {}
-                        })
-                    end
+                    SendPhoneMail("Lugo Bervich","Bio Research...","Heres the location. You Need to hack the firewall through the computer in laboratory 1 and then download that research. <br/> i will email again when i see the firewall is down!")
+                
                     SetNewWaypoint(labcoords1)
                     ExportLabTarget1()
                     ExportSecurityTarget()
@@ -100,27 +81,8 @@ RegisterNetEvent('qb-miniheists:StartLabHack', function()
                 end
                 QBCore.Functions.Notify('You Successfully Downloaded the Research, Wait for New Email!', 'primary', 8000)
                 Wait(7500)
-                if Config.PhoneScript == 'qb' then
-                    TriggerServerEvent('qb-phone:server:sendNewMail', {sender = "Lugo Bervich",subject = "Bio Research...",
-                        message = "Great you did it! now head to the Cold Room and bring me some samples of their work and any files you see!" ,
-                    })
-                elseif Config.PhoneScript == 'qs' then
-                    TriggerServerEvent('qs-smartphone:server:sendNewMail', {sender = 'Lugo Bervich',subject = 'Bio Research...',
-                        message = "Great you did it! now head to the Cold Room and bring me some samples of their work and any files you see!",
-                        button = {}
-                    })
-                elseif Config.PhoneScript == 'road' then
-                    TriggerServerEvent('roadphone:receiveMail', {sender = 'Lugo Bervich',subject = "Bio Research...",
-                        message = "Great you did it! now head to the Cold Room and bring me some samples of their work and any files you see!",
-                        image = '/public/html/static/img/icons/app/mail.png',
-                        button = {}
-                    })
-                elseif Config.PhoneScript == 'gks' then
-                    TriggerServerEvent('gksphone:NewMail', {sender = 'Lugo Bervich',image = '/html/static/img/icons/mail.png',subject = "Bio Research...",
-                        message = "Great you did it! now head to the Cold Room and bring me some samples of their work and any files you see!",
-                        button = {}
-                    })
-                end
+                SendPhoneMail("Lugo Bervich", "Bio Research...","Great you did it! now head to the Cold Room and bring me some samples of their work and any files you see!")
+                
                 RemoveLabTarget1()
                 ExportLabTarget2()
             else
@@ -149,27 +111,8 @@ RegisterNetEvent('qb-miniheists:StartLabHack2', function()
     end
     QBCore.Functions.Notify('You got everything, Get out of there!', 'primary', 8000)
     Wait(7500)
-    if Config.PhoneScript == 'qb' then
-        TriggerServerEvent('qb-phone:server:sendNewMail', {sender = "Lugo Bervich",subject = "Bio Research...",
-            message = "Now Bring the Research, Samples and Files back to me for your payment!" ,
-        })
-    elseif Config.PhoneScript == 'qs' then
-        TriggerServerEvent('qs-smartphone:server:sendNewMail', {sender = 'Lugo Bervich',subject = 'Bio Research...',
-            message = "Now Bring the Research, Samples and Files back to me for your payment!",
-            button = {}
-        })
-    elseif Config.PhoneScript == 'road' then
-        TriggerServerEvent('roadphone:receiveMail', {sender = 'Lugo Bervich',subject = "Bio Research...",
-            message = "Now Bring the Research, Samples and Files back to me for your payment!",
-            image = '/public/html/static/img/icons/app/mail.png',
-            button = {}
-        })
-    elseif Config.PhoneScript == 'gks' then
-        TriggerServerEvent('gksphone:NewMail', {sender = 'Lugo Bervich',image = '/html/static/img/icons/mail.png',subject = "Bio Research...",
-            message = "Now Bring the Research, Samples and Files back to me for your payment!",
-            button = {}
-        })
-    end
+    SendPhoneMail("Lugo Bervich","Bio Research...","Now Bring the Research, Samples and Files back to me for your payment!")
+    
     GotJob = false
     Finished = true
     SecurityBypass = false

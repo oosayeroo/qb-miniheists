@@ -6,6 +6,7 @@ Config.PhoneScript = 'qb'
 -- qs = quasar smartphone
 -- road = roadphone
 -- gks = gks phone
+-- lb = lb-phone
 
 Config.DebugHeists = false -- true for testing
 Config.DebugPoly = true

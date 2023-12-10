@@ -41,27 +41,8 @@ RegisterNetEvent('qb-miniheists:StartMWRaid', function()
                 QBCore.Functions.Notify('You will be emailed shortly with the location', 'primary')
                 if CurrentCops >= Config.MinimumPolice then
                     Wait(EmailTime)
-                    if Config.PhoneScript == 'qb' then
-                        TriggerServerEvent('qb-phone:server:sendNewMail', {sender = "Frank Castle",subject = "Top Secret Documents...",
-                            message = "Heres the location. you will need to hack each terminal in the office until you gain access to the locked pc. <br/> watch out for the guards. take friends with you and lots of guns!" ,
-                        })
-                    elseif Config.PhoneScript == 'qs' then
-                        TriggerServerEvent('qs-smartphone:server:sendNewMail', {sender = 'Frank Castle',subject = 'Top Secret Documents...',
-                            message = "Heres the location. you will need to hack each terminal in the office until you gain access to the locked pc. <br/> watch out for the guards. take friends with you and lots of guns!",
-                            button = {}
-                        })
-                    elseif Config.PhoneScript == 'road' then
-                        TriggerServerEvent('roadphone:receiveMail', {sender = 'Frank Castle',subject = "Top Secret Documents...",
-                            message = "Heres the location. you will need to hack each terminal in the office until you gain access to the locked pc. <br/> watch out for the guards. take friends with you and lots of guns!",
-                            image = '/public/html/static/img/icons/app/mail.png',
-                            button = {}
-                        })
-                    elseif Config.PhoneScript == 'gks' then
-                        TriggerServerEvent('gksphone:NewMail', {sender = 'Frank Castle',image = '/html/static/img/icons/mail.png',subject = "Top Secret Documents...",
-                            message = "Heres the location. you will need to hack each terminal in the office until you gain access to the locked pc. <br/> watch out for the guards. take friends with you and lots of guns!",
-                            button = {}
-                        })
-                    end
+                    SendPhoneMail("Frank Castle","Top Secret Documents...","Heres the location. you will need to hack each terminal in the office until you gain access to the locked pc. <br/> watch out for the guards. take friends with you and lots of guns!")
+                    
                     SetNewWaypoint(mwcoords)
                     ExportMW1Target()
                 else

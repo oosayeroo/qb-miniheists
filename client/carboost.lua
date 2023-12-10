@@ -44,27 +44,7 @@ RegisterNetEvent("qb-miniheists:getJobA", function()
             location = Config.CarHeistLocations.CarSpawn[math.random(1, #Config.CarHeistLocations.CarSpawn)]
             TriggerServerEvent('qb-miniheists:GiveTierAPrice')
             print("server event done")
-            if Config.PhoneScript == 'qb' then
-                TriggerServerEvent('qb-phone:server:sendNewMail', {sender = "Mr Lynch",subject = "Get This Car",
-                    message = "Hey Man i got a small job for you. here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship" ,
-                })
-            elseif Config.PhoneScript == 'qs' then
-                TriggerServerEvent('qs-smartphone:server:sendNewMail', {sender = 'Mr Lynch',subject = 'Get This Car',
-                    message = "Hey Man i got a small job for you. here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship",
-                    button = {}
-                })
-            elseif Config.PhoneScript == 'road' then
-                TriggerServerEvent('roadphone:receiveMail', {sender = 'Mr Lynch',subject = "Get This Car",
-                    message = "Hey Man i got a small job for you. here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship",
-                    image = '/public/html/static/img/icons/app/mail.png',
-                    button = {}
-                })
-            elseif Config.PhoneScript == 'gks' then
-                TriggerServerEvent('gksphone:NewMail', {sender = 'Mr Lynch',image = '/html/static/img/icons/mail.png',subject = "Get This Car",
-                    message = "Hey Man i got a small job for you. here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship",
-                    button = {}
-                })
-            end
+            SendPhoneMail("Mr Lynch","Get This Car", "Hey Man i got a small job for you. here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship")
             GotJob = true
             GotJobA = true
             Finished = false
@@ -83,27 +63,8 @@ RegisterNetEvent("qb-miniheists:getJobB", function()
             carmodel = Config.VehicleTierB.BoostVehicles[math.random(1, #Config.VehicleTierB.BoostVehicles)]
             location = Config.CarHeistLocations.CarSpawn[math.random(1, #Config.CarHeistLocations.CarSpawn)]
             TriggerServerEvent('qb-miniheists:GiveTierBPrice')
-            if Config.PhoneScript == 'qb' then
-                TriggerServerEvent('qb-phone:server:sendNewMail', {sender = "Mr Lynch",subject = "Get This Car",
-                    message = "Hey got a nice motor for you today! here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship" ,
-                })
-            elseif Config.PhoneScript == 'qs' then
-                TriggerServerEvent('qs-smartphone:server:sendNewMail', {sender = 'Mr Lynch',subject = 'Get This Car',
-                    message = "Hey got a nice motor for you today! here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship",
-                    button = {}
-                })
-            elseif Config.PhoneScript == 'road' then
-                TriggerServerEvent('roadphone:receiveMail', {sender = 'Mr Lynch',subject = "Get This Car",
-                    message = "Hey got a nice motor for you today! here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship",
-                    image = '/public/html/static/img/icons/app/mail.png',
-                    button = {}
-                })
-            elseif Config.PhoneScript == 'gks' then
-                TriggerServerEvent('gksphone:NewMail', {sender = 'Mr Lynch',image = '/html/static/img/icons/mail.png',subject = "Get This Car",
-                    message = "Hey got a nice motor for you today! here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship",
-                    button = {}
-                })
-            end
+            SendPhoneMail("Mr Lynch","Get This Car", "Hey got a nice motor for you today! here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship")
+            
             GotJob = true
             GotJobB = true
             Finished = false
@@ -122,27 +83,8 @@ RegisterNetEvent("qb-miniheists:getJobC", function()
             carmodel = Config.VehicleTierC.BoostVehicles[math.random(1, #Config.VehicleTierC.BoostVehicles)]
             location = Config.CarHeistLocations.CarSpawn[math.random(1, #Config.CarHeistLocations.CarSpawn)]
             TriggerServerEvent('qb-miniheists:GiveTierCPrice')
-            if Config.PhoneScript == 'qb' then
-                TriggerServerEvent('qb-phone:server:sendNewMail', {sender = "Mr Lynch",subject = "Get This Car",
-                    message = "Hey i got a real pretty ride for you today. here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship" ,
-                })
-            elseif Config.PhoneScript == 'qs' then
-                TriggerServerEvent('qs-smartphone:server:sendNewMail', {sender = 'Mr Lynch',subject = 'Get This Car',
-                    message = "Hey i got a real pretty ride for you today. here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship",
-                    button = {}
-                })
-            elseif Config.PhoneScript == 'road' then
-                TriggerServerEvent('roadphone:receiveMail', {sender = 'Mr Lynch',subject = "Get This Car",
-                    message = "Hey i got a real pretty ride for you today. here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship",
-                    image = '/public/html/static/img/icons/app/mail.png',
-                    button = {}
-                })
-            elseif Config.PhoneScript == 'gks' then
-                TriggerServerEvent('gksphone:NewMail', {sender = 'Mr Lynch',image = '/html/static/img/icons/mail.png',subject = "Get This Car",
-                    message = "Hey i got a real pretty ride for you today. here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship",
-                    button = {}
-                })
-            end
+            SendPhoneMail("Mr Lynch","Get This Car", "Hey i got a real pretty ride for you today. here are the details. <br/> Location: <br/> "..location.name.."<br/> Car Model: <br/> "..carmodel.name.."<br/> And Bring it back to the crane here to load onto the ship")
+            
             GotJob = true
             GotJobC = true
             Finished = false

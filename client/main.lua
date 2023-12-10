@@ -42,3 +42,28 @@ RegisterNetEvent('qb-miniheists:EndHeistCommand', function()
     end
 end)
 
+function SendPhoneMail(sender, subject, msg)
+    if Config.PhoneScript == 'qb' then
+        TriggerServerEvent('qb-phone:server:sendNewMail', {sender = sender,subject = subject,
+            message = msg ,
+        })
+    elseif Config.PhoneScript == 'qs' then
+        TriggerServerEvent('qs-smartphone:server:sendNewMail', {sender = sender,subject = subject,
+            message = msg,
+            button = {}
+        })
+    elseif Config.PhoneScript == 'road' then
+        TriggerServerEvent('roadphone:receiveMail', {sender = sender,subject = subject,
+            message = msg,
+            image = '/public/html/static/img/icons/app/mail.png',
+            button = {}
+        })
+    elseif Config.PhoneScript == 'gks' then
+        TriggerServerEvent('gksphone:NewMail', {sender = sender,image = '/html/static/img/icons/mail.png',subject = subject,
+            message = msg,
+            button = {}
+        })
+    elseif Config.PhoneScript == 'lb' then
+        TriggerServerEvent('qb-miniheists:SendServerMail',sender,subject,msg)
+    end
+end
